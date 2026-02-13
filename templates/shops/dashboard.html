@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block title %}Shop Dashboard - SkillCore{% endblock %}
+
+{% block content %}
+<div class="bg-slate-50 min-h-screen py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- Welcome Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-primary">{{ shop.name }} Dashboard</h1>
+            <p class="mt-2 text-secondary">Manage your shop, prices, and view performance.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <!-- Sidebar -->
+            <div class="md:col-span-1 space-y-6">
+                <!-- Shop Status Card -->
+                <div class="bg-white rounded-xl shadow-card p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-bold text-primary">Shop Status</h3>
+                        {% if shop.verified %}
+                        <span
+                            class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded border border-green-200">Verified</span>
+                        {% else %}
+                        <span
+                            class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2.5 py-0.5 rounded border border-yellow-200">Pending</span>
+                        {% endif %}
+                    </div>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-secondary">Prices Listed</span>
+                            <span class="font-medium text-slate-900">{{ prices.count }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-secondary">Avg Rating</span>
+                            <span class="font-medium text-slate-900">{{ shop.average_rating|floatform:1 }} / 5</span>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-6 border-t border-slate-100">
+                        <a href="{% url 'shops:detail' shop.id %}"
+                            class="text-primary hover:text-primary-hover text-sm font-medium flex items-center">
+                            View public profile
+                            <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14">
+                                </path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="md:col-span-3 space-y-6">
+
+                <!-- Quick Actions -->
+                <div class="flex justify-between items-center bg-white p-4 rounded-xl shadow-card">
+                    <h2 class="text-lg font-bold text-slate-900">Your Prices</h2>
+                    <a href="{% url 'shops:add_price' %}"
+                        class="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-soft hover:shadow-lg flex items-center">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4">
+                            </path>
+                        </svg>
+                        Add New Price
+                    </a>
+                </div>
+
+                <!-- Prices List -->
+                <div class="bg-white rounded-xl shadow-card overflow-hidden">
+                    {% if prices %}
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-slate-200">
+                            <thead class="bg-slate-50">
+                                <tr>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-secondary uppercase tracking-wider">
+                                        Device Model</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-secondary uppercase tracking-wider">
+                                        Service</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-secondary uppercase tracking-wider">
+                                        Price (SEK)</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-secondary uppercase tracking-wider">
+                                        Last Updated</th>
+                                    <th scope="col" class="relative px-6 py-3"><span class="sr-only">Actions</span></th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-slate-200">
+                                {% for price in prices %}
+                                <tr class="hover:bg-slate-50 transition-colors">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">
+                                        {{ price.phone_model.brand.name }} {{ price.phone_model.name }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-secondary">
+                                        {{ price.service_type.name }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-primary font-bold">
+                                        {{ price.price|floatform:0 }} kr
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-secondary">
+                                        {{ price.updated_at|date:"M d, Y" }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <a href="#" class="text-primary hover:text-primary-hover">Edit</a>
+                                        <span class="text-slate-300 mx-2">|</span>
+                                        <form action="{% url 'shops:delete_price' price.id %}" method="post"
+                                            class="inline"
+                                            onsubmit="return confirm('Are you sure you want to delete this price?');">
+                                            {% csrf_token %}
+                                            <button type="submit"
+                                                class="text-red-600 hover:text-red-900 border-none bg-transparent cursor-pointer p-0">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="text-center py-12 px-6">
+                        <div class="mx-auto h-12 w-12 text-slate-300">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="mt-2 text-sm font-medium text-slate-900">No prices added</h3>
+                        <p class="mt-1 text-sm text-secondary">Get started by adding your first repair price.</p>
+                        <div class="mt-6">
+                            <a href="{% url 'shops:add_price' %}"
+                                class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                                Add Price
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

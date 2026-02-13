@@ -1,0 +1,191 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="{% block meta_description %}Compare mobile repair prices across Sweden. Find the best deals on screen repairs, battery replacements, and more from verified repair shops.{% endblock %}">
+    <meta name="keywords"
+        content="mobile repair, phone repair, screen repair, battery replacement, Sweden, price comparison">
+    <meta name="author" content="SkillCore">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title"
+        content="{% block og_title %}SkillCore - Compare Mobile Repair Prices in Sweden{% endblock %}">
+    <meta property="og:description"
+        content="{% block og_description %}Find and compare mobile repair prices from verified shops across Sweden. Save time and money on your phone repairs.{% endblock %}">
+    <meta property="og:site_name" content="SkillCore">
+
+    <title>{% block title %}SkillCore - Compare Repair Prices{% endblock %}</title>
+
+    <!-- Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS (CDN for Development) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#7D53FF', // Purple
+                        'primary-hover': '#6b44e5',
+                        secondary: '#000000', // Black
+                        dark: '#242834', // Dark Navy
+                        background: '#F8FAFC',
+                        'text-primary': '#242834', // Using dark navy
+                        'text-secondary': '#64748B',
+                        border: '#E2E8F0',
+                        success: '#B6FF00',
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+                        'card': '0 0 0 1px rgba(0,0,0,0.03), 0 2px 8px rgba(0,0,0,0.04)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8FAFC;
+            color: #0F172A;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .glass-header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #E2E8F0;
+        }
+    </style>
+
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "SkillCore",
+        "url": "https://skillcore.se",
+        "description": "Compare mobile repair prices across Sweden. Find the best deals on screen repairs, battery replacements, and more from verified repair shops.",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://skillcore.se/pricing/results/?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+</head>
+
+<body class="flex flex-col min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="glass-header fixed w-full z-50 top-0 left-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="window.location.href='/'">
+                    <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white font-bold">S
+                    </div>
+                    <span class="font-bold text-xl tracking-tight text-primary">SkillCore</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="{% url 'pages:about' %}"
+                        class="text-slate-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
+                    <a href="{% url 'shops:dashboard' %}"
+                        class="text-slate-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">For
+                        Shops</a>
+                    <a href="{% url 'pages:contact' %}"
+                        class="text-slate-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'shops:dashboard' %}"
+                        class="text-primary hover:text-primary-hover font-medium text-sm mr-2">Dashboard</a>
+                    <span class="text-secondary font-medium text-sm hidden sm:block">Hi, {{ user.username }}</span>
+                    <form action="{% url 'users:logout' %}" method="post" class="inline">
+                        {% csrf_token %}
+                        <button type="submit"
+                            class="text-slate-600 hover:text-primary font-medium text-sm">Logout</button>
+                    </form>
+                    {% else %}
+                    <a href="{% url 'users:login' %}" class="text-slate-600 hover:text-primary font-medium text-sm">Sign
+                        In</a>
+                    <a href="{% url 'users:signup' %}"
+                        class="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-lg text-sm font-medium transition-all shadow-soft hover:shadow-lg">
+                        Sign Up
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow pt-20">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-auto">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-1">
+                    <span class="font-bold text-xl text-primary">SkillCore</span>
+                    <p class="mt-4 text-sm text-secondary">
+                        The easiest way to compare mobile repair prices in Sweden. Transparent, fast, and free.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-primary tracking-wider uppercase">Company</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="{% url 'pages:about' %}"
+                                class="text-base text-secondary hover:text-primary">About</a></li>
+                        <li><a href="{% url 'pages:contact' %}"
+                                class="text-base text-secondary hover:text-primary">Contact</a></li>
+                        <li><a href="{% url 'shops:dashboard' %}"
+                                class="text-base text-secondary hover:text-primary">For Shops</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-primary tracking-wider uppercase">Services</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="{% url 'pricing:home' %}"
+                                class="text-base text-slate-500 hover:text-primary">Compare Prices</a></li>
+                        <li><a href="{% url 'pricing:home' %}" class="text-base text-slate-500 hover:text-primary">Find
+                                Repair Shops</a></li>
+                        <li><a href="{% url 'pricing:home' %}" class="text-base text-slate-500 hover:text-primary">Read
+                                Reviews</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-slate-900 tracking-wider uppercase">Legal</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="{% url 'pages:privacy' %}"
+                                class="text-base text-slate-500 hover:text-primary">Privacy</a></li>
+                        <li><a href="{% url 'pages:terms' %}"
+                                class="text-base text-slate-500 hover:text-primary">Terms</a></li>
+                        <li><a href="{% url 'pages:privacy' %}"
+                                class="text-base text-slate-500 hover:text-primary">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-8 border-t border-slate-200 pt-8 text-center md:text-left">
+                <p class="text-sm text-slate-400">&copy; 2026 SkillCore. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

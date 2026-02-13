@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://skillcore.se/sitemap.xml
+
+# Disallow admin and user-specific pages
+Disallow: /admin/
+Disallow: /users/
+Disallow: /shops/dashboard/

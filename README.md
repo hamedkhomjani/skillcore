@@ -58,7 +58,7 @@ skillcore/
 
 - **Backend**: Django 6.0.2
 - **Database**: SQLite (development) / PostgreSQL (production-ready)
-- **Frontend**: HTML, Tailwind CSS, Vanilla JavaScript
+- **Frontend**: HTML, Tailwind CSS, Fluent UI Web Components (Fluent 2), Vanilla JavaScript
 - **Authentication**: Django's built-in auth system
 - **Environment Management**: django-environ
 
@@ -164,7 +164,7 @@ DATABASE_URL=sqlite:///db.sqlite3
 
 ## 🎨 Design System
 
-The project uses a custom Tailwind CSS configuration with the following color scheme:
+The project uses a combination of **Fluent UI Web Components (Fluent 2)** for interactive elements and a custom **Tailwind CSS** configuration for layout and typography with the following color scheme:
 
 - **Primary**: `#7D53FF` (Purple) - Main brand color
 - **Secondary**: `#64748B` (Slate) - Text and accents

@@ -3,6 +3,18 @@
 <html lang="en">
 
 <head>
+    <!-- Prevent Flash of Light Mode -->
+    <script>
+        (function() {
+            try {
+                const storedTheme = localStorage.getItem('theme-preference');
+                const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (storedTheme === 'dark' || (!storedTheme && systemPrefersDark)) {
+                    document.documentElement.classList.add('dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
@@ -29,11 +41,12 @@
     <!-- Tailwind CSS (CDN for Development) -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Fluent UI Web Components (Fluent 2) -->
-    <script type="module" src="https://unpkg.com/@fluentui/web-components@3.0.0-rc.9/dist/web-components.min.js"></script>
+    <!-- Fluent UI Web Components -->
+    <script type="module" src="https://unpkg.com/@fluentui/web-components@2"></script>
 
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
@@ -66,13 +79,77 @@
             color: #0F172A;
             -webkit-font-smoothing: antialiased;
         }
+        .dark body {
+            background-color: #0F172A;
+            color: #F8FAFC;
+        }
 
         .glass-header {
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid #E2E8F0;
         }
+        .dark .glass-header {
+            background: rgba(15, 23, 42, 0.9);
+            border-bottom: 1px solid #334155;
+        }
+
+        /* Global Dark Mode Overrides for child templates with hardcoded light classes */
+        .dark .bg-white { background-color: #1E293B !important; } /* slate-800 */
+        .dark .bg-slate-50 { background-color: #0F172A !important; } /* slate-900 */
+        .dark .text-secondary { color: #94A3B8 !important; } /* slate-400 */
+        .dark .text-slate-900 { color: #F8FAFC !important; } /* slate-50 */
+        .dark .text-slate-700 { color: #E2E8F0 !important; } /* slate-200 */
+        .dark .text-slate-600 { color: #CBD5E1 !important; } /* slate-300 */
+        .dark .text-slate-500 { color: #94A3B8 !important; } /* slate-400 */
+        .dark .border-slate-100 { border-color: #334155 !important; }
+        .dark .border-slate-200 { border-color: #334155 !important; }
+        .dark .border-slate-300 { border-color: #475569 !important; }
+        
+        .dark input:not([type="checkbox"]):not([type="radio"]), 
+        .dark select, 
+        .dark textarea {
+            background-color: #334155 !important;
+            color: #F8FAFC !important;
+            border-color: #475569 !important;
+        }
     </style>
+
+    <!-- Fluent 2 Theme Script -->
+    <script type="module">
+        import { baseLayerLuminance, StandardLuminance } from "https://unpkg.com/@fluentui/web-components@2";
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const themeToggle = document.getElementById('theme-toggle');
+
+            function applyTheme(isDark) {
+                if (isDark) {
+                    document.documentElement.classList.add('dark');
+                    baseLayerLuminance.setValueFor(document.body, StandardLuminance.DarkMode);
+                    if (themeToggle) themeToggle.checked = true;
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    baseLayerLuminance.setValueFor(document.body, StandardLuminance.LightMode);
+                    if (themeToggle) themeToggle.checked = false;
+                }
+            }
+
+            const storedTheme = localStorage.getItem('theme-preference');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            let isDarkMode = storedTheme === 'dark' || (!storedTheme && systemPrefersDark);
+            
+            // Apply synchronously to set Fluent properties early
+            applyTheme(isDarkMode);
+
+            if (themeToggle) {
+                themeToggle.addEventListener('change', (e) => {
+                    isDarkMode = e.target.checked;
+                    localStorage.setItem('theme-preference', isDarkMode ? 'dark' : 'light');
+                    applyTheme(isDarkMode);
+                });
+            }
+        });
+    </script>
 
     <!-- Structured Data for SEO -->
     <script type="application/ld+json">
@@ -91,7 +168,7 @@
     </script>
 </head>
 
-<body class="flex flex-col min-h-screen">
+<body class="flex flex-col min-h-screen transition-colors duration-300">
 
     <!-- Navigation -->
     <nav class="glass-header fixed w-full z-50 top-0 left-0">
@@ -104,14 +181,24 @@
                 </div>
                 <div class="hidden md:flex space-x-8">
                     <a href="{% url 'pages:about' %}"
-                        class="text-slate-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
+                        class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
                     <a href="{% url 'shops:dashboard' %}"
-                        class="text-slate-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">For
+                        class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">For
                         Shops</a>
                     <a href="{% url 'pages:contact' %}"
-                        class="text-slate-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact</a>
+                        class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact</a>
                 </div>
                 <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2 mr-2">
+                        <span class="text-sm">☀️</span>
+                        <fluent-switch id="theme-toggle" title="Toggle Dark/Light Mode"></fluent-switch>
+                        <script>
+                            if (document.documentElement.classList.contains('dark')) {
+                                document.getElementById('theme-toggle').setAttribute('checked', 'true');
+                            }
+                        </script>
+                        <span class="text-sm">🌙</span>
+                    </div>
                     {% if user.is_authenticated %}
                     <a href="{% url 'shops:dashboard' %}"
                         class="text-primary hover:text-primary-hover font-medium text-sm mr-2">Dashboard</a>
@@ -141,7 +228,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-slate-200 mt-auto">
+    <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 mt-auto transition-colors duration-300">
         <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div class="col-span-1 md:col-span-1">

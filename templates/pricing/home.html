@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="relative bg-white overflow-hidden">
+<div class="relative bg-white dark:bg-slate-900 overflow-hidden transition-colors duration-300">
     <div class="max-w-7xl mx-auto">
-        <div class="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
+        <div class="relative z-10 pb-8 bg-white dark:bg-slate-900 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32 transition-colors duration-300">
             <main class="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
                 <div class="sm:text-center lg:text-left">
                     <h1 class="text-4xl tracking-tight font-extrabold text-primary sm:text-5xl md:text-6xl">
@@ -11,22 +11,22 @@
                         <span class="block text-primary">Prices Instantly</span>
                     </h1>
                     <p
-                        class="mt-3 text-base text-secondary sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                        class="mt-3 text-base text-secondary dark:text-slate-400 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0 transition-colors duration-300">
                         Find and compare the best prices for screen repairs, battery replacements, and more. We connect
                         you with trusted local repair shops across Sweden.
                     </p>
 
                     <!-- Search Box -->
-                    <div class="mt-8 bg-white p-6 rounded-2xl shadow-xl border border-slate-100 relative z-20">
+                    <div class="mt-8 bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-700 relative z-20 transition-colors duration-300">
                         <form action="{% url 'pricing:results' %}" method="get"
                             class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                             <!-- Brand -->
                             <div class="relative">
-                                <label for="brand" class="block text-sm font-medium text-slate-700 mb-1">Phone
+                                <label for="brand" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Phone
                                     Brand</label>
                                 <select id="brand" name="brand"
-                                    class="block w-full pl-3 pr-10 py-3 text-base border-slate-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-xl bg-slate-50">
+                                    class="block w-full pl-3 pr-10 py-3 text-base border-slate-300 dark:border-slate-600 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-xl bg-slate-50 dark:bg-slate-900 dark:text-white transition-colors duration-300">
                                     <option value="">Select Brand</option>
                                     {% for brand in brands %}
                                     <option value="{{ brand.id }}">{{ brand.name }}</option>
@@ -36,9 +36,9 @@
 
                             <!-- Model -->
                             <div class="relative">
-                                <label for="model" class="block text-sm font-medium text-slate-700 mb-1">Model</label>
+                                <label for="model" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Model</label>
                                 <select id="model" name="model"
-                                    class="block w-full pl-3 pr-10 py-3 text-base border-slate-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-xl bg-slate-50"
+                                    class="block w-full pl-3 pr-10 py-3 text-base border-slate-300 dark:border-slate-600 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-xl bg-slate-50 dark:bg-slate-900 dark:text-white disabled:opacity-50 transition-colors duration-300"
                                     disabled>
                                     <option value="">Select Brand First</option>
                                 </select>
@@ -46,10 +46,10 @@
 
                             <!-- Service -->
                             <div class="relative md:col-span-2">
-                                <label for="service" class="block text-sm font-medium text-slate-700 mb-1">Service
+                                <label for="service" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Service
                                     Type</label>
                                 <select id="service" name="service"
-                                    class="block w-full pl-3 pr-10 py-3 text-base border-slate-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-xl bg-slate-50">
+                                    class="block w-full pl-3 pr-10 py-3 text-base border-slate-300 dark:border-slate-600 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-xl bg-slate-50 dark:bg-slate-900 dark:text-white transition-colors duration-300">
                                     <option value="">Select Service</option>
                                     {% for service in service_types %}
                                     <option value="{{ service.id }}">{{ service.name }}</option>
@@ -67,7 +67,7 @@
                         </form>
                     </div>
 
-                    <div class="mt-6 flex items-center justify-center lg:justify-start gap-4 text-sm text-secondary">
+                    <div class="mt-6 flex items-center justify-center lg:justify-start gap-4 text-sm text-secondary dark:text-slate-400 transition-colors duration-300">
                         <div class="flex items-center">
                             <svg class="h-5 w-5 text-green-500 mr-2" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
@@ -98,23 +98,23 @@
             </main>
         </div>
     </div>
-    <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 bg-slate-50">
-        <img class="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full opacity-90"
+    <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
+        <img class="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full opacity-90 dark:opacity-30"
             src="https://images.unsplash.com/photo-1596558450255-7c0b7be9d56a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
             alt="Mobile phone repair">
-        <div class="absolute inset-0 bg-gradient-to-r from-white via-white/50 to-transparent lg:via-white/20"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-white dark:from-slate-900 via-white/50 dark:via-slate-900/50 to-transparent lg:via-white/20 transition-colors duration-300"></div>
     </div>
 </div>
 
 <!-- Features Section -->
-<div class="py-12 bg-white">
+<div class="py-12 bg-white dark:bg-slate-900 transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
             <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-primary mb-6 leading-tight">
                 Compare Mobile Repair Prices<br>
-                <span class="text-slate-600">Across Sweden</span>
+                <span class="text-slate-600 dark:text-slate-300">Across Sweden</span>
             </h1>
-            <p class="text-lg sm:text-xl text-secondary max-w-2xl mx-auto">
+            <p class="text-lg sm:text-xl text-secondary dark:text-slate-400 max-w-2xl mx-auto">
                 Find the best deals on screen repairs, battery replacements, and more. Compare prices from verified
                 repair shops in your area.
             </p>
@@ -147,9 +147,9 @@
                                     d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                         </div>
-                        <p class="ml-16 text-lg leading-6 font-medium text-slate-900">Verified Shops</p>
+                        <p class="ml-16 text-lg leading-6 font-medium text-slate-900 dark:text-white">Verified Shops</p>
                     </dt>
-                    <dd class="mt-2 ml-16 text-base text-slate-500">
+                    <dd class="mt-2 ml-16 text-base text-slate-500 dark:text-slate-400">
                         We check every shop to ensure quality service and genuine parts.
                     </dd>
                 </div>
@@ -163,9 +163,9 @@
                                     d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                         </div>
-                        <p class="ml-16 text-lg leading-6 font-medium text-slate-900">Book Instantly</p>
+                        <p class="ml-16 text-lg leading-6 font-medium text-slate-900 dark:text-white">Book Instantly</p>
                     </dt>
-                    <dd class="mt-2 ml-16 text-base text-slate-500">
+                    <dd class="mt-2 ml-16 text-base text-slate-500 dark:text-slate-400">
                         Reserve your spot online and skip the waiting line.
                     </dd>
                 </div>

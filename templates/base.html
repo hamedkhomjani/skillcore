@@ -102,16 +102,16 @@
         }
 
         /* Global Dark Mode Overrides for child templates with hardcoded light classes */
-        .dark .bg-white { background-color: #1E293B !important; } /* slate-800 */
-        .dark .bg-slate-50 { background-color: #0F172A !important; } /* slate-900 */
-        .dark .text-secondary { color: #94A3B8 !important; } /* slate-400 */
-        .dark .text-slate-900 { color: #F8FAFC !important; } /* slate-50 */
-        .dark .text-slate-700 { color: #E2E8F0 !important; } /* slate-200 */
-        .dark .text-slate-600 { color: #CBD5E1 !important; } /* slate-300 */
-        .dark .text-slate-500 { color: #94A3B8 !important; } /* slate-400 */
-        .dark .border-slate-100 { border-color: #334155 !important; }
-        .dark .border-slate-200 { border-color: #334155 !important; }
-        .dark .border-slate-300 { border-color: #475569 !important; }
+        .dark .bg-white:not([class*="dark:bg-"]) { background-color: #1E293B !important; } /* slate-800 */
+        .dark .bg-slate-50:not([class*="dark:bg-"]) { background-color: #0F172A !important; } /* slate-900 */
+        .dark .text-secondary:not([class*="dark:text-"]) { color: #94A3B8 !important; } /* slate-400 */
+        .dark .text-slate-900:not([class*="dark:text-"]) { color: #F8FAFC !important; } /* slate-50 */
+        .dark .text-slate-700:not([class*="dark:text-"]) { color: #E2E8F0 !important; } /* slate-200 */
+        .dark .text-slate-600:not([class*="dark:text-"]) { color: #CBD5E1 !important; } /* slate-300 */
+        .dark .text-slate-500:not([class*="dark:text-"]) { color: #94A3B8 !important; } /* slate-400 */
+        .dark .border-slate-100:not([class*="dark:border-"]) { border-color: #334155 !important; }
+        .dark .border-slate-200:not([class*="dark:border-"]) { border-color: #334155 !important; }
+        .dark .border-slate-300:not([class*="dark:border-"]) { border-color: #475569 !important; }
         
         .dark input:not([type="checkbox"]):not([type="radio"]), 
         .dark select, 

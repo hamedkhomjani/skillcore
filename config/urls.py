@@ -25,6 +25,8 @@ sitemaps = {
     'static': StaticViewSitemap,
 }
 
+from apps.pricing.views import home as pricing_home
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('apps.users.urls', namespace='users')),
@@ -32,7 +34,7 @@ urlpatterns = [
     path('phones/', include('apps.phones.urls', namespace='phones')),
     path('pricing/', include('apps.pricing.urls', namespace='pricing')),
     path('', include('apps.pages.urls', namespace='pages')), # Pages like about, contact
-    path('', include('apps.pricing.urls')), # Root URL to pricing/home (no namespace to avoid conflict)
+    path('', pricing_home, name='root_home'), # Root URL mapped directly to pricing home
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 

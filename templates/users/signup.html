@@ -162,7 +162,7 @@
                     <span class="text-xs font-bold text-slate-700 dark:text-slate-300">Continue with Microsoft</span>
                 </button>
 
-                <button type="button" class="social-btn group flex items-center justify-center w-full h-[46px] bg-black text-white rounded-2xl hover:bg-black/90 transition-all shadow-lg hover:shadow-black/20">
+                <button type="button" class="social-btn group flex items-center justify-center w-full h-[46px] bg-black text-white rounded-2xl hover:bg-slate-900 border border-transparent hover:border-white/20 transition-all shadow-lg">
                     <svg class="w-4 h-4 mr-3 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.51 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.673-1.48 3.677-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.806-3.532 1.82a3.655 3.655 0 00-1.284 3.738c1.35.104 2.727-.715 3.571-1.729z"/>
                     </svg>
@@ -315,9 +315,11 @@
                     strengthText.textContent = randomMsg;
                     alreadyValid = true;
                 }
-                strengthBadge.classList.remove('hidden');
+                strengthBadge.classList.remove('opacity-0', 'h-0', 'pointer-events-none');
+                strengthBadge.classList.add('opacity-100', 'h-auto', 'pointer-events-auto');
             } else {
-                strengthBadge.classList.add('hidden');
+                strengthBadge.classList.add('opacity-0', 'h-0', 'pointer-events-none');
+                strengthBadge.classList.remove('opacity-100', 'h-auto', 'pointer-events-auto');
                 alreadyValid = false;
             }
 
